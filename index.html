@@ -80,6 +80,96 @@ a {
   font-size: 18px;
   opacity: 0.6;
 }
+
+/* ヌメロンゲーム */
+.numeron {
+  max-width: 420px;
+  margin: 32px 0;
+  padding: 20px;
+  box-sizing: border-box;
+
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(65, 105, 161, 0.18);
+  border-radius: 14px;
+  box-shadow: 0 3px 10px rgba(36, 91, 158, 0.05);
+}
+
+.numeron-description {
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+.numeron-form {
+  display: flex;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.numeron-input {
+  min-width: 0;
+  width: 100%;
+  padding: 12px;
+  box-sizing: border-box;
+
+  border: 1px solid #b5cbe4;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #243b53;
+  font-size: 20px;
+  letter-spacing: 4px;
+}
+
+.numeron button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  background: #4169a1;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.numeron button:hover {
+  background: #245b9e;
+}
+
+.numeron button:focus-visible,
+.numeron-input:focus-visible {
+  outline: 2px solid #245b9e;
+  outline-offset: 3px;
+}
+
+.numeron-result {
+  min-height: 48px;
+  padding: 12px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  background: rgba(234, 244, 252, 0.8);
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.numeron-history {
+  padding-left: 24px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+.numeron-new-game {
+  margin-top: 12px;
+}
+
+@media (max-width: 360px) {
+  .numeron {
+    padding: 14px;
+  }
+
+  .numeron-form {
+    flex-wrap: wrap;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -119,8 +209,153 @@ a {
   </li>
 </ul>
 
+<section class="numeron">
+  <h2>Numeron</h2>
+
+  <p class="numeron-description">
+    Guess the secret 3-digit number!<br>
+    数字と位置が合えばEAT、数字だけ合えばBITEです。<br>
+    何度でも挑戦できます！
+  </p>
+
+  <form id="numeron-form" class="numeron-form">
+    <input
+      id="numeron-input"
+      class="numeron-input"
+      type="text"
+      inputmode="numeric"
+      pattern="[0-9]*"
+      maxlength="3"
+      placeholder="例：123"
+      aria-label="3桁の数字"
+      autocomplete="off"
+      required
+    >
+    <button type="submit">判定</button>
+  </form>
+
+  <p id="numeron-result"
+     class="numeron-result"
+     aria-live="polite">
+    3桁の数字を入力してください。
+  </p>
+
+  <h3>History</h3>
+  <ol id="numeron-history" class="numeron-history">
+  </ol>
+
+  <button
+    type="button"
+    id="numeron-new-game"
+    class="numeron-new-game">
+    もう一度遊ぶ
+  </button>
+</section>
+
   <footer>
     <p>&copy; 2026 blau-litmus</p>
   </footer>
+
+<script>
+(() => {
+  const form = document.getElementById("numeron-form");
+  const input = document.getElementById("numeron-input");
+  const result = document.getElementById("numeron-result");
+  const history = document.getElementById("numeron-history");
+  const newGameButton = document.getElementById("numeron-new-game");
+  const submitButton = form.querySelector('button[type="submit"]');
+
+  let answer = "";
+  let gameFinished = false;
+
+  // 重複しない3桁の正解を作る
+  function createAnswer() {
+    const first = String(Math.floor(Math.random() * 9) + 1);
+    const remaining = "0123456789"
+      .replace(first, "")
+      .split("");
+
+    // 残りの数字をシャッフル
+    for (let i = remaining.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [remaining[i], remaining[j]] = [remaining[j], remaining[i]];
+    }
+
+    return first + remaining[0] + remaining[1];
+  }
+
+  // ゲームを初期化
+  function startGame() {
+    answer = createAnswer();
+    gameFinished = false;
+    input.value = "";
+    input.disabled = false;
+    submitButton.disabled = false;
+    result.textContent = "3桁の数字を入力してください。";
+    history.replaceChildren();
+    input.focus();
+  }
+
+  // EATとBITEを判定
+  function checkGuess(guess) {
+    let eat = 0;
+    let bite = 0;
+
+    for (let i = 0; i < 3; i++) {
+      if (guess[i] === answer[i]) {
+        eat++;
+      } else if (answer.includes(guess[i])) {
+        bite++;
+      }
+    }
+
+    return { eat, bite };
+  }
+
+  // 入力された数字を判定
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    if (gameFinished) return;
+
+    const guess = input.value.trim();
+
+    if (!/^[0-9]{3}$/.test(guess)) {
+      result.textContent = "半角数字で3桁入力してください。";
+      return;
+    }
+
+    if (new Set(guess).size !== 3) {
+      result.textContent = "同じ数字は使えません。別の数字を入力してください。";
+      return;
+    }
+
+    const { eat, bite } = checkGuess(guess);
+
+    const item = document.createElement("li");
+    item.textContent = `${guess} — ${eat} EAT / ${bite} BITE`;
+    history.prepend(item);
+
+    if (eat === 3) {
+      result.textContent = `正解！ 答えは ${answer} でした！`;
+      gameFinished = true;
+      input.disabled = true;
+      submitButton.disabled = true;
+    } else {
+      result.textContent = `${eat} EAT / ${bite} BITE — もう一度！`;
+    }
+
+    input.value = "";
+    if (!gameFinished) input.focus();
+  });
+
+  // 新しいゲームを開始
+  newGameButton.addEventListener("click", startGame);
+
+  // 最初のゲームを開始
+  startGame();
+})();
+</script>
+
 </body>
 </html>
