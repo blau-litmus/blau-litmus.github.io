@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>blau-litmus</title>
+<style>
+/* ページ全体 */
+body {
+  background-color: #eaf4fc;
+  color: #243b53;
+  font-family: sans-serif;
+}
+
+/* 見出し */
+h1, h2 {
+  color: #4169a1;
+}
+
+/* リンク一覧以外の通常リンク */
+a {
+  color: #245b9e;
+}
+
+/* リンク一覧の余白を調整 */
+.link-list {
+  list-style: none;
+  padding: 0;
+  max-width: 420px;
+}
+
+/* リンクカード */
+.link-list li {
+  margin: 12px 0;
+}
+
+.link-list a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(65, 105, 161, 0.15);
+  border-radius: 14px;
+
+  color: #245b9e;
+  text-decoration: none;
+  font-weight: 600;
+
+  box-shadow: 0 3px 10px rgba(36, 91, 158, 0.05);
+  transition: transform 0.2s ease,
+              background-color 0.2s ease,
+              box-shadow 0.2s ease;
+}
+
+/* マウスを乗せたとき */
+.link-list a:hover {
+  background: #ffffff;
+  color: #163f73;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(36, 91, 158, 0.12);
+}
+
+/* プロフィール画像 */
+.link-icon {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* リンク名 */
+.link-list a > span:first-of-type {
+  flex: 1;
+}
+
+/* 右端の矢印 */
+.link-arrow {
+  font-size: 18px;
+  opacity: 0.6;
+}
+
+/* ミニゲーム */
+.numeron {
+  max-width: 420px;
+  margin: 36px 0;
+}
+
+.numeron p {
+  line-height: 1.6;
+}
+
+.game-card {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(65, 105, 161, 0.18);
+  border-radius: 14px;
+  box-shadow: 0 3px 10px rgba(36, 91, 158, 0.05);
+}
+
+.game-form {
+  display: flex;
+  gap: 8px;
+}
+
+.game-form input {
+  box-sizing: border-box;
+  width: 0;
+  min-width: 0;
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #b8cce3;
+  border-radius: 8px;
+  background: #fff;
+  color: #243b53;
+  font-size: 18px;
+  text-align: center;
+}
+
+.game-form button,
+.game-reset {
+  padding: 12px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #4169a1;
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.game-form button:hover,
+.game-reset:hover {
+  background: #245b9e;
+}
+
+#game-message {
+  min-height: 1.6em;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+#game-history {
+  padding-left: 24px;
+}
+
+#game-history li {
+  margin: 8px 0;
+  overflow-wrap: anywhere;
+}
+
+.game-reset {
+  margin-top: 8px;
+}
+
+@media (max-width: 400px) {
+  .game-card {
+    padding: 14px;
+  }
+
+  .game-form {
+    gap: 6px;
+  }
+
+  .game-form button {
+    padding: 12px;
+  }
+}
+.game-form button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.game-form input:disabled {
+  background: #edf2f7;
+  color: #627d98;
+}
+
+.game-form input:focus-visible,
+.game-form button:focus-visible,
+.game-reset:focus-visible {
+  outline: 2px solid #245b9e;
+  outline-offset: 3px;
+}
+</style>
+</head>
+<body>
+  <h1>blau-litmus</h1>
+  <p>Welcome to mypage. <3</p>
+
+<h2>Links</h2>
+
+<ul class="link-list">
+  <li>
+    <a href="https://note.com/" target="_blank" rel="noopener noreferrer">
+      <img src="images/note-icon-bk.png" alt="" class="link-icon">
+      <span>note</span>
+      <span class="link-arrow">↗</span>
+    </a>
+  </li>
+  <li>
+    <a href="https://x.com/" target="_blank" rel="noopener noreferrer">
+      <img src="images/logo-black.png" alt="" class="link-icon">
+      <span>X</span>
+      <span class="link-arrow">↗</span>
+    </a>
+  </li>
+  <li>
+    <a href="https://www.twitch.tv/" target="_blank" rel="noopener noreferrer">
+      <img src="images/glitch_flat_purple.png" alt="" class="link-icon">
+      <span>Twitch</span>
+      <span class="link-arrow">↗</span>
+    </a>
+  </li>
+  <li>
+    <a href="https://plurk.com/" target="_blank" rel="noopener noreferrer">
+      <img src="images/479e7351bbf90f495360.png" alt="" class="link-icon">
+      <span>Plurk</span>
+      <span class="link-arrow">↗</span>
+    </a>
+  </li>
+</ul>
+
+<section class="numeron">
+  <h2>Mini Game</h2>
+  <p>Guess the 3-digit number!</p>
+
+  <div class="game-card">
+    <form class="game-form" id="game-form" novalidate>
+      <input
+        id="game-input"
+        type="text"
+        inputmode="numeric"
+        pattern="[0-9]{3}"
+        maxlength="3"
+        placeholder="000"
+        aria-label="3桁の数字"
+        autocomplete="off"
+        required
+      >
+      <button type="submit">Guess</button>
+    </form>
+
+    <p id="game-message" aria-live="polite">
+      3桁の数字を入力してください。
+    </p>
+
+    <ol id="game-history"></ol>
+
+    <button
+      class="game-reset"
+      id="game-reset"
+      type="button"
+    >
+      もう一度遊ぶ
+    </button>
+  </div>
+</section>
+
+  <footer>
+    <p>&copy; 2026 blau-litmus</p>
+  </footer>
+
+<script>
+(() => {
+  const form = document.getElementById("game-form");
+  const input = document.getElementById("game-input");
+  const message = document.getElementById("game-message");
+  const history = document.getElementById("game-history");
+  const reset = document.getElementById("game-reset");
+
+  let answer;
+  let finished = false;
+
+  function newGame() {
+    const digits = ["0", "1", "2", "3", "4",
+                    "5", "6", "7", "8", "9"];
+
+    // 数字をシャッフルして、先頭3桁を正解にする
+    for (let i = digits.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [digits[i], digits[j]] = [digits[j], digits[i]];
+    }
+
+    answer = digits.slice(0, 3).join("");
+    finished = false;
+    input.value = "";
+    input.disabled = false;
+    form.querySelector("button").disabled = false;
+    history.replaceChildren();
+    message.textContent = "3桁の数字を入力してください。";
+    input.focus();
+  }
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    if (finished) return;
+
+    const guess = input.value;
+
+    if (!/^\d{3}$/.test(guess) ||
+        new Set(guess).size !== 3) {
+      message.textContent =
+        "異なる数字を3つ入力してください。";
+      return;
+    }
+
+    let eat = 0;
+    let bite = 0;
+
+    for (let i = 0; i < 3; i++) {
+      if (guess[i] === answer[i]) {
+        eat++;
+      } else if (answer.includes(guess[i])) {
+        bite++;
+      }
+    }
+
+    const item = document.createElement("li");
+    item.textContent = `${guess} → ${eat} EAT / ${bite} BITE`;
+    history.prepend(item);
+
+    if (eat === 3) {
+      message.textContent = "正解！おめでとうございます！ 🎉";
+      finished = true;
+      input.disabled = true;
+      form.querySelector("button").disabled = true;
+    } else {
+      message.textContent = `${eat} EAT / ${bite} BITE`;
+      input.value = "";
+      input.focus();
+    }
+  });
+
+  reset.addEventListener("click", newGame);
+
+  newGame();
+})();
+</script>
+
+</body>
+</html>
