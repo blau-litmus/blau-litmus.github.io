@@ -186,6 +186,49 @@ a {
   <h1>blau-litmus</h1>
   <p>Welcome to mypage. <3</p>
 
+<section class="numeron">
+  <h2>Numeron</h2>
+
+  <p class="numeron-description">
+    Guess the secret 3-digit number!<br>
+    数字と位置が合えばEAT、数字だけ合えばBITEです。<br>
+    何度でも挑戦できます！
+  </p>
+
+  <form id="numeron-form" class="numeron-form">
+    <input
+      id="numeron-input"
+      class="numeron-input"
+      type="text"
+      inputmode="numeric"
+      pattern="[0-9]*"
+      maxlength="3"
+      placeholder="例：123"
+      aria-label="3桁の数字"
+      autocomplete="off"
+      required
+    >
+    <button type="submit">判定</button>
+  </form>
+
+  <p id="numeron-result"
+     class="numeron-result"
+     aria-live="polite">
+    3桁の数字を入力してください。
+  </p>
+
+  <h3>History</h3>
+  <ol id="numeron-history" class="numeron-history">
+  </ol>
+
+  <button
+    type="button"
+    id="numeron-new-game"
+    class="numeron-new-game">
+    もう一度遊ぶ
+  </button>
+</section>
+
 <h2>Links</h2>
 
 <ul class="link-list">
@@ -239,49 +282,6 @@ a {
     </a>
   </li>
 </ul>
-
-<section class="numeron">
-  <h2>Numeron</h2>
-
-  <p class="numeron-description">
-    Guess the secret 3-digit number!<br>
-    数字と位置が合えばEAT、数字だけ合えばBITEです。<br>
-    何度でも挑戦できます！
-  </p>
-
-  <form id="numeron-form" class="numeron-form">
-    <input
-      id="numeron-input"
-      class="numeron-input"
-      type="text"
-      inputmode="numeric"
-      pattern="[0-9]*"
-      maxlength="3"
-      placeholder="例：123"
-      aria-label="3桁の数字"
-      autocomplete="off"
-      required
-    >
-    <button type="submit">判定</button>
-  </form>
-
-  <p id="numeron-result"
-     class="numeron-result"
-     aria-live="polite">
-    3桁の数字を入力してください。
-  </p>
-
-  <h3>History</h3>
-  <ol id="numeron-history" class="numeron-history">
-  </ol>
-
-  <button
-    type="button"
-    id="numeron-new-game"
-    class="numeron-new-game">
-    もう一度遊ぶ
-  </button>
-</section>
 
   <footer>
     <p>&copy; 2026 blau-litmus</p>
