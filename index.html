@@ -5,35 +5,121 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>blau-litmus</title>
 <style>
-  body {
-    background-color: #eaf4fc;
-    color: #243b53;
-  }
+/* ページ全体 */
+body {
+  background-color: #eaf4fc;
+  color: #243b53;
+  font-family: sans-serif;
+}
 
-  h1, h2 {
-    color: #4169a1;
-  }
+/* 見出し */
+h1, h2 {
+  color: #4169a1;
+}
 
-  a {
-    color: #245b9e;
-  }
+/* リンク一覧以外の通常リンク */
+a {
+  color: #245b9e;
+}
 
-  a:hover {
-    color: #163f73;
-  }
+/* リンク一覧の余白を調整 */
+.link-list {
+  list-style: none;
+  padding: 0;
+  max-width: 420px;
+}
+
+/* リンクカード */
+.link-list li {
+  margin: 12px 0;
+}
+
+.link-list a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(65, 105, 161, 0.15);
+  border-radius: 14px;
+
+  color: #245b9e;
+  text-decoration: none;
+  font-weight: 600;
+
+  box-shadow: 0 3px 10px rgba(36, 91, 158, 0.05);
+  transition: transform 0.2s ease,
+              background-color 0.2s ease,
+              box-shadow 0.2s ease;
+}
+
+/* マウスを乗せたとき */
+.link-list a:hover {
+  background: #ffffff;
+  color: #163f73;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(36, 91, 158, 0.12);
+}
+
+/* プロフィール画像 */
+.link-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* リンク名 */
+.link-list a > span:first-of-type {
+  flex: 1;
+}
+
+/* 右端の矢印 */
+.link-arrow {
+  font-size: 18px;
+  opacity: 0.6;
+}
 </style>
 </head>
 <body>
   <h1>blau-litmus</h1>
   <p>Welcome to mypage.</p>
 
-  <h2>Links</h2>
-  <ul>
-    <li><a href="https://note.com/blau_litmus">note</a></li>
-    <li><a href="https://x.com/blau_litmus">X</a></li>
-    <li><a href="https://www.twitch.tv/blau_litmus">Twitch</a></li>
-    <li><a href="https://plurk.com/blau_litmus">Plurk</a></li>
-  </ul>
+<h2>Links</h2>
+
+<ul class="link-list">
+  <li>
+    <a href="https://note.com/blau_litmus" target="_blank" rel="noopener noreferrer">
+      <img src="images/profile.jpg" alt="" class="link-icon">
+      <span>note</span>
+      <span class="link-arrow">↗</span>
+    </a>
+  </li>
+  <li>
+    <a href="https://x.com/blau_litmus" target="_blank" rel="noopener noreferrer">
+      <img src="images/profile.jpg" alt="" class="link-icon">
+      <span>X</span>
+      <span class="link-arrow">↗</span>
+    </a>
+  </li>
+  <li>
+    <a href="https://www.twitch.tv/blau_litmus" target="_blank" rel="noopener noreferrer">
+      <img src="images/profile.jpg" alt="" class="link-icon">
+      <span>Twitch</span>
+      <span class="link-arrow">↗</span>
+    </a>
+  </li>
+  <li>
+    <a href="https://plurk.com/blau_litmus" target="_blank" rel="noopener noreferrer">
+      <img src="images/profile.jpg" alt="" class="link-icon">
+      <span>Plurk</span>
+      <span class="link-arrow">↗</span>
+    </a>
+  </li>
+</ul>
+
   <footer>
     <p>&copy; 2026 blau-litmus</p>
   </footer>
